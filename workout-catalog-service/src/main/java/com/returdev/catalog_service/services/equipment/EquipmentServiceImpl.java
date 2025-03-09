@@ -23,7 +23,7 @@ public class EquipmentServiceImpl implements EquipmentService {
     @Override
     public EquipmentEntity saveEquipment(EquipmentEntity equipment) throws IllegalArgumentException {
         if (equipment.getId() != null) {
-            throw new IllegalArgumentException("Equipment ID must be null for a new entity");
+            throw new IllegalArgumentException("");//TODO Add message
         }
         return equipmentRepository.save(equipment);
     }
@@ -41,7 +41,7 @@ public class EquipmentServiceImpl implements EquipmentService {
      */
     @Override
     public EquipmentEntity getEquipmentById(Long id) {
-        return equipmentRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Equipment not found with ID: " + id));
+        return equipmentRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(""));//TODO Add message
     }
 
     /**
@@ -49,7 +49,7 @@ public class EquipmentServiceImpl implements EquipmentService {
      */
     @Override
     public EquipmentEntity getEquipmentByName(String name) {
-        return equipmentRepository.findEquipmentByName(name).orElseThrow(() -> new EntityNotFoundException("Equipment not found with name: " + name));
+        return equipmentRepository.findEquipmentByName(name).orElseThrow(() -> new EntityNotFoundException("")); //TODO Add message
     }
 
     /**
@@ -100,7 +100,7 @@ public class EquipmentServiceImpl implements EquipmentService {
      */
     private void existsById(Long id) {
         if (!equipmentRepository.existsById(id)) {
-            throw new EntityNotFoundException("Equipment not found with ID: " + id);
+            throw new EntityNotFoundException(""); //TODO Add message
         }
     }
 }
