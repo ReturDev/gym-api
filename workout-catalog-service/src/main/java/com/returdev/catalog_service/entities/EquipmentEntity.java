@@ -1,9 +1,11 @@
 package com.returdev.catalog_service.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.URL;
 
 
 /**
@@ -12,7 +14,7 @@ import lombok.NoArgsConstructor;
  * including its name and image URL.
  */
 @Entity
-@Table(name="equipments")
+@Table(name = "equipments")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,9 +24,11 @@ public class EquipmentEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Size(min = 3, max = 25, message = "{validation.size.message}")
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
+    @URL(message = "{validation.url.message}")
     @Column(name = "image_url", nullable = false)
     private String imageUrl;
 
