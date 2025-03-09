@@ -1,6 +1,7 @@
 package com.returdev.catalog_service.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,10 +26,12 @@ public class EquipmentEntity {
     private Long id;
 
     @Size(min = 3, max = 25, message = "{validation.size.message}")
+    @NotNull(message = "{validation.not_null_required.message}")
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
     @URL(message = "{validation.url.message}")
+    @NotNull(message = "{validation.not_null_required.message}")
     @Column(name = "image_url", nullable = false)
     private String imageUrl;
 
