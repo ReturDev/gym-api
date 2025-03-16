@@ -60,7 +60,7 @@ public class ExerciseEntity {
     private String exerciseImageUrl;
 
     @Column(name = "video_url", nullable = false)
-    private String exerciseVideUrl;
+    private String exerciseVideoUrl;
 
     @Column(name = "created_at", nullable = false)
     private Date createdAt;
