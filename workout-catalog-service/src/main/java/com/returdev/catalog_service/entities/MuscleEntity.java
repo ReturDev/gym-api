@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 /**
  * Represents a muscle entity in the system.
  * This entity is mapped to the 'muscles' table and contains details related to a muscle,
@@ -34,5 +36,13 @@ public class MuscleEntity {
     @Column(name = "muscular_group")
     @NotNull(message = "{validation.not_null_required.message}")
     private MuscularGroup muscularGroup;
+
+    @OneToMany(
+            mappedBy = "muscle",
+            cascade = {CascadeType.REMOVE, CascadeType.PERSIST},
+            orphanRemoval = true,
+            fetch = FetchType.EAGER
+    )
+    private List<MuscleInvolvedEntity> muscleInvolvedEntities;
 
 }
