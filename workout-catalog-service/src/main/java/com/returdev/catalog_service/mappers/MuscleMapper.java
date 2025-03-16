@@ -3,11 +3,13 @@ package com.returdev.catalog_service.mappers;
 import com.returdev.catalog_service.dtos.muscle.MuscleRequestDTO;
 import com.returdev.catalog_service.dtos.muscle.MuscleResponseDTO;
 import com.returdev.catalog_service.entities.MuscleEntity;
+import org.springframework.stereotype.Component;
 
 /**
  * Mapper class for converting between MuscleEntity and its DTO representations.
  * This class implements the ModelMapper interface to provide mapping methods.
  */
+@Component
 public class MuscleMapper implements ModelMapper<MuscleResponseDTO, MuscleRequestDTO, MuscleEntity> {
 
     /**
@@ -36,7 +38,8 @@ public class MuscleMapper implements ModelMapper<MuscleResponseDTO, MuscleReques
         return new MuscleEntity(
                 requestDto.id(),
                 requestDto.name(),
-                requestDto.muscularGroup()
+                requestDto.muscularGroup(),
+                null
         );
     }
 }
