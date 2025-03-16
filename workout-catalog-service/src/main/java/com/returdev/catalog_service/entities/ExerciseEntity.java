@@ -50,7 +50,7 @@ public class ExerciseEntity {
             joinColumns = @JoinColumn(name = "exercise_id"),
             inverseJoinColumns = @JoinColumn(name = "muscle_involved_id")
     )
-    private List<MuscleEntity> musclesInvolved;
+    private List<MuscleInvolvedEntity> musclesInvolved;
 
     @ManyToOne(cascade = CascadeType.MERGE, optional = false)
     @JoinColumn(name = "equipment_id")
