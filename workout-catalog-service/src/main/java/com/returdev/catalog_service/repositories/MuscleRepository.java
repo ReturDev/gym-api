@@ -29,7 +29,7 @@ public interface MuscleRepository extends JpaRepository<MuscleEntity, Long> {
     /**
      * Finds a muscle entity by its name.
      *
-     * @param name the name of the muscle entity
+     * @param muscleName the name of the muscle entity
      * @return an Optional containing the muscle entity if found, or an empty Optional if not found
      */
     @Query("SELECT m FROM MuscleEntity m WHERE m.name = :name")
