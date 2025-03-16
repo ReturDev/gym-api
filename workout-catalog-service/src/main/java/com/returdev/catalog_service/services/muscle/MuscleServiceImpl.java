@@ -1,6 +1,8 @@
 package com.returdev.catalog_service.services.muscle;
 
 import com.returdev.catalog_service.entities.MuscleEntity;
+import com.returdev.catalog_service.entities.MuscleInvolvedEntity;
+import com.returdev.catalog_service.enums.MuscleActivationLevel;
 import com.returdev.catalog_service.enums.MuscularGroup;
 import com.returdev.catalog_service.repositories.MuscleRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -31,6 +33,13 @@ public class MuscleServiceImpl implements MuscleService {
         if (muscleEntity.getId() != null) {
             throw new IllegalArgumentException("Muscle entity already has an ID.");
         }
+        muscleEntity.setMuscleInvolvedEntities(
+                List.of(
+                        new MuscleInvolvedEntity(MuscleActivationLevel.LOW),
+                        new MuscleInvolvedEntity(MuscleActivationLevel.MEDIUM),
+                        new MuscleInvolvedEntity(MuscleActivationLevel.HIGH)
+                )
+        );
         return muscleRepository.save(muscleEntity);
     }
 
