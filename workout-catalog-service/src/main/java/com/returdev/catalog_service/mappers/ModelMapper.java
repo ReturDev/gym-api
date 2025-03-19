@@ -8,6 +8,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+import java.util.List;
+
 /**
  * Interface for mapping between different model types.
  *
@@ -44,6 +46,18 @@ public interface ModelMapper<R, T, E> {
     default ContentResponseDTO<R> toContentResponse(E entity) {
         return new ContentResponseDTO<>(mapToResponseDto(entity));
     }
+
+/**
+ * Converts a list of entities to a content response DTO containing a list of response DTOs.
+ *
+ * @param entities the list of entities to convert
+ * @return the content response DTO containing a list of response DTOs
+ */
+default ContentResponseDTO<List<R>> toContentResponse(List<E> entities) {
+    return new ContentResponseDTO<>(
+            entities.stream().map(this::mapToResponseDto).toList()
+    );
+}
 
     /**
      * Converts a page of entities to a pagination response DTO.
