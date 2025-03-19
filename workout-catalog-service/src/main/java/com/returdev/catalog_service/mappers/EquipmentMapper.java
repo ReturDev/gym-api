@@ -18,7 +18,7 @@ public class EquipmentMapper implements ModelMapper<EquipmentResponseDTO, Equipm
      * @return the converted EquipmentResponseDTO
      */
     @Override
-    public EquipmentResponseDTO toResponseDto(EquipmentEntity entity) {
+    public EquipmentResponseDTO mapToResponseDto(EquipmentEntity entity) {
         return new EquipmentResponseDTO(
                 entity.getId(),
                 entity.getName(),
@@ -33,7 +33,7 @@ public class EquipmentMapper implements ModelMapper<EquipmentResponseDTO, Equipm
      * @return the converted EquipmentEntity
      */
     @Override
-    public EquipmentEntity toEntity(EquipmentRequestDTO requestDto) {
+    public EquipmentEntity mapToEntity(EquipmentRequestDTO requestDto) {
         return new EquipmentEntity(
                 requestDto.id(),
                 requestDto.name(),

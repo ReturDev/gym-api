@@ -19,7 +19,7 @@ public class MuscleMapper implements ModelMapper<MuscleResponseDTO, MuscleReques
      * @return the converted MuscleResponseDTO
      */
     @Override
-    public MuscleResponseDTO toResponseDto(MuscleEntity entity) {
+    public MuscleResponseDTO mapToResponseDto(MuscleEntity entity) {
         return new MuscleResponseDTO(
                 entity.getId(),
                 entity.getName(),
@@ -34,7 +34,7 @@ public class MuscleMapper implements ModelMapper<MuscleResponseDTO, MuscleReques
      * @return the converted MuscleEntity
      */
     @Override
-    public MuscleEntity toEntity(MuscleRequestDTO requestDto) {
+    public MuscleEntity mapToEntity(MuscleRequestDTO requestDto) {
         return new MuscleEntity(
                 requestDto.id(),
                 requestDto.name(),
