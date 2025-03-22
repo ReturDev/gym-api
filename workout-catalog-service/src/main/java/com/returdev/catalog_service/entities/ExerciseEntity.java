@@ -1,6 +1,8 @@
 package com.returdev.catalog_service.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,10 +33,13 @@ public class ExerciseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Size(min = 3,max = 50)
+    @NotNull
     @Column(name = "name", nullable = false, length = 50)
     private String name;
 
     @Lob
+    @NotNull
     @Column(name = "description", nullable = false)
     private String description;
 
@@ -56,9 +61,11 @@ public class ExerciseEntity {
     @JoinColumn(name = "equipment_id")
     private EquipmentEntity equipment;
 
+    @NotNull
     @Column(name = "image_url", nullable = false)
     private String exerciseImageUrl;
 
+    @NotNull
     @Column(name = "video_url", nullable = false)
     private String exerciseVideoUrl;
 
