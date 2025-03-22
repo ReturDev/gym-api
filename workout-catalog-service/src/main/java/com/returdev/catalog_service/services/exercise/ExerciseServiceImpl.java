@@ -13,8 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * Service implementation for managing exercise entities.
- * This class provides methods for CRUD operations and custom queries related to exercises.
+ * {@inheritDoc}
  */
 @Service
 @RequiredArgsConstructor
@@ -23,11 +22,7 @@ public class ExerciseServiceImpl implements ExerciseService {
     private final ExerciseRepository exerciseRepository;
 
     /**
-     * Retrieves an exercise entity by its ID.
-     *
-     * @param exerciseId the ID of the exercise entity
-     * @return the exercise entity with the specified ID
-     * @throws EntityNotFoundException if the exercise entity is not found
+     * {@inheritDoc}
      */
     @Override
     public ExerciseEntity getExerciseEntityById(Long exerciseId) {
@@ -35,11 +30,7 @@ public class ExerciseServiceImpl implements ExerciseService {
     }
 
     /**
-     * Retrieves all exercise entities, optionally including invisible ones.
-     *
-     * @param includeInvisible whether to include invisible exercises
-     * @param pageable the pagination information
-     * @return a page of exercise entities
+     * {@inheritDoc}
      */
     @Override
     public Page<ExerciseEntity> getAllExercises(boolean includeInvisible, Pageable pageable) {
@@ -51,12 +42,7 @@ public class ExerciseServiceImpl implements ExerciseService {
     }
 
     /**
-     * Retrieves exercise entities whose names contain the specified string.
-     *
-     * @param name the string to search for in exercise names
-     * @param includeInvisibleExercises whether to include invisible exercises
-     * @param pageable the pagination information
-     * @return a page of exercise entities matching the search criteria
+     * {@inheritDoc}
      */
     @Override
     public Page<ExerciseEntity> getExercisesByNameContaining(
@@ -68,12 +54,7 @@ public class ExerciseServiceImpl implements ExerciseService {
     }
 
     /**
-     * Retrieves exercise entities associated with a specific muscle name.
-     *
-     * @param muscleName the name of the muscle
-     * @param includeInvisible whether to include invisible exercises
-     * @param pageable the pagination information
-     * @return a page of exercise entities associated with the specified muscle name
+     * {@inheritDoc}
      */
     @Override
     public Page<ExerciseEntity> getExercisesByMuscleName(String muscleName, boolean includeInvisible, Pageable pageable) {
@@ -81,13 +62,7 @@ public class ExerciseServiceImpl implements ExerciseService {
     }
 
     /**
-     * Retrieves exercise entities associated with a specific muscle name and activation level.
-     *
-     * @param muscleName the name of the muscle
-     * @param muscleActivationLevel the activation level of the muscle
-     * @param includeInvisible whether to include invisible exercises
-     * @param pageable the pagination information
-     * @return a page of exercise entities matching the specified criteria
+     * {@inheritDoc}
      */
     @Override
     public Page<ExerciseEntity> getExercisesByMuscleNameAndActivationLevel(String muscleName, MuscleActivationLevel muscleActivationLevel, boolean includeInvisible, Pageable pageable) {
@@ -95,16 +70,15 @@ public class ExerciseServiceImpl implements ExerciseService {
     }
 
     /**
-     * Updates an existing exercise entity.
-     *
-     * @param exerciseId the ID of the exercise entity to update
-     * @param newDescription the new description to set
-     * @param isBenchRequired the new bench requirement to set
-     * @param musclesInvolved the new muscles involved to set
-     * @param newImageUrl the new image URL to set
-     * @param newVideoUrl the new video URL to set
-     * @param isVisible the new visibility status to set
-     * @return true if the update was successful, false otherwise
+     * {@inheritDoc}
+     */
+    @Override
+    public ExerciseEntity saveExercise(ExerciseEntity exercise) {
+        return exerciseRepository.save(exercise);
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public boolean updateExercise(
@@ -117,32 +91,55 @@ public class ExerciseServiceImpl implements ExerciseService {
             Boolean isVisible
     ) {
 
+        existsById(exerciseId);
+
         boolean updated = false;
 
         if (newDescription != null) {
-            updated = exerciseRepository.updateExerciseDescription(exerciseId, newDescription) == 1;
+            updated |= exerciseRepository.updateExerciseDescription(exerciseId, newDescription) == 1;
         }
 
         if (isBenchRequired != null) {
-            updated = exerciseRepository.updateIsBenchRequired(exerciseId, isBenchRequired) == 1;
+            updated |= exerciseRepository.updateIsBenchRequired(exerciseId, isBenchRequired) == 1;
         }
 
         if (musclesInvolved != null) {
-            updated = exerciseRepository.updateMusclesInvolved(exerciseId, musclesInvolved) == 1;
+            updated |= exerciseRepository.updateMusclesInvolved(exerciseId, musclesInvolved) == 1;
         }
 
         if (newImageUrl != null) {
-            updated = exerciseRepository.updateExerciseImageUrl(exerciseId, newImageUrl) == 1;
+            updated |= exerciseRepository.updateExerciseImageUrl(exerciseId, newImageUrl) == 1;
         }
 
         if (newVideoUrl != null) {
-            updated = exerciseRepository.updateExerciseVideoUrl(exerciseId, newImageUrl) == 1;
+            updated |= exerciseRepository.updateExerciseVideoUrl(exerciseId, newVideoUrl) == 1;
         }
 
         if (isVisible != null) {
-            updated = exerciseRepository.updateExerciseVisibility(exerciseId, isVisible) == 1;
+            updated |= exerciseRepository.updateExerciseVisibility(exerciseId, isVisible) == 1;
         }
 
         return updated;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void deleteExerciseById(Long id) {
+        exerciseRepository.deleteById(id);
+    }
+
+    /**
+     * Checks if an exercise entity with the given ID exists.
+     *
+     * @param id the ID of the exercise entity
+     * @throws EntityNotFoundException if the exercise entity is not found
+     */
+    private void existsById(Long id) {
+        if (!exerciseRepository.existsById(id)) {
+            throw new EntityNotFoundException(""); //TODO Add message
+        }
+    }
+
 }
