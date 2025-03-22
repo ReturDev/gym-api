@@ -1,12 +1,10 @@
 package com.returdev.catalog_service.services.equipment;
 
+import com.returdev.catalog_service.annotations.validation.ValidId;
 import com.returdev.catalog_service.entities.EquipmentEntity;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.validation.annotation.Validated;
 
@@ -26,7 +24,7 @@ public interface EquipmentService {
      * @return the saved equipment entity
      * @throws IllegalArgumentException if the equipment entity is invalid
      */
-    EquipmentEntity saveEquipment(EquipmentEntity equipment) throws IllegalArgumentException;
+    EquipmentEntity saveEquipment(@Valid EquipmentEntity equipment) throws IllegalArgumentException;
 
     /**
      * Retrieves all equipment entities.
@@ -41,9 +39,7 @@ public interface EquipmentService {
      * @param id the ID of the equipment entity
      * @return the equipment entity with the specified ID
      */
-    EquipmentEntity getEquipmentById(
-            @NotNull(message = "{validation.id.not_null_required.message}") Long id
-    );
+    EquipmentEntity getEquipmentById(@ValidId Long id);
 
     /**
      * Retrieves an equipment entity by its name.
@@ -51,9 +47,7 @@ public interface EquipmentService {
      * @param name the name of the equipment entity
      * @return the equipment entity with the specified name
      */
-    EquipmentEntity getEquipmentByName(
-            @NotBlank(message = "{validation.not_blank_message}") String name
-    );
+    EquipmentEntity getEquipmentByName(@NotBlank() @Size(min = 3, max = 25) String name);
 
     /**
      * Checks if an equipment entity with the given name exists.
@@ -61,19 +55,14 @@ public interface EquipmentService {
      * @param name the name of the equipment entity
      * @return true if an equipment entity with the given name exists, false otherwise
      */
-    boolean existsByName(
-            @NotBlank(message = "{validation.not_blank_message}") String name
-    );
+    boolean existsByName(@NotBlank() @Size(min = 3, max = 25) String name);
 
     /**
      * Deletes an equipment entity by its ID.
      *
      * @param id the ID of the equipment entity to delete
      */
-    void deleteEquipmentById(
-            @NotNull(message = "{validation.id.not_null_required.message}")
-            @Min(value = 1, message = "{validation.min_value.message}") Long id
-    );
+    void deleteEquipmentById(@ValidId Long id);
 
     /**
      * Updates an existing equipment entity.
@@ -92,9 +81,9 @@ public interface EquipmentService {
      * @return true if the update was successful, false otherwise
      */
     boolean updateEquipment(
-            @NotNull Long id,
-            @Size(min = 3, max = 25, message = "{validation.size.message}") String name,
-            @URL(message = "{validation.ul") String imageUrl
+            @ValidId Long id,
+            @Size(min = 3, max = 25)String name,
+            @URL() String imageUrl
     );
 
 }
