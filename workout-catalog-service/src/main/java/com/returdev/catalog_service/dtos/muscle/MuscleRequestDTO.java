@@ -1,6 +1,7 @@
 package com.returdev.catalog_service.dtos.muscle;
 
 import com.returdev.catalog_service.enums.MuscularGroup;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
@@ -10,8 +11,6 @@ import jakarta.validation.constraints.Size;
  */
 public record MuscleRequestDTO(
         Long id,
-        @Size(min = 3, max = 25, message = "{validation.size.message}")
-        @NotNull(message = "{validation.not_null_required.message}")
-        String name,
-        @NotNull(message = "{validation.not_null_required.message}") MuscularGroup muscularGroup
+        @Size(min = 3, max = 25) @NotBlank String name,
+        @NotNull MuscularGroup muscularGroup
 ) {}
