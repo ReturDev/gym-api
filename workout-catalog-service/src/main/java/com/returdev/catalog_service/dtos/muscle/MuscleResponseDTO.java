@@ -1,5 +1,6 @@
 package com.returdev.catalog_service.dtos.muscle;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.returdev.catalog_service.enums.MuscularGroup;
 
 /**
@@ -9,5 +10,6 @@ import com.returdev.catalog_service.enums.MuscularGroup;
 public record MuscleResponseDTO(
         Long id,
         String name,
+        @JsonProperty("muscular_group")
         MuscularGroup muscularGroup
 ) {}
