@@ -2,6 +2,7 @@ package com.returdev.catalog_service.dtos.muscle.involved;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.returdev.catalog_service.dtos.muscle.MuscleRequestDTO;
+import com.returdev.catalog_service.dtos.muscle.MuscleResponseDTO;
 import com.returdev.catalog_service.enums.MuscleActivationLevel;
 
 /**
@@ -14,6 +15,6 @@ import com.returdev.catalog_service.enums.MuscleActivationLevel;
  */
 public record MuscleInvolvedResponseDTO(
         Long id,
-        MuscleRequestDTO muscle,
+        MuscleResponseDTO muscle,
         @JsonProperty("activation_level") MuscleActivationLevel activationLevel
 ) {}
