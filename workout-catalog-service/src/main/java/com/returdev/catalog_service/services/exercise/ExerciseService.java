@@ -6,6 +6,7 @@ import com.returdev.catalog_service.entities.ExerciseEntity;
 import com.returdev.catalog_service.entities.MuscleInvolvedEntity;
 import com.returdev.catalog_service.enums.MuscleActivationLevel;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.data.domain.Page;
@@ -83,6 +84,14 @@ public interface ExerciseService {
     );
 
     /**
+     * Saves a new exercise entity.
+     *
+     * @param exercise the exercise entity to save
+     * @return the saved exercise entity
+     */
+    ExerciseEntity saveExercise(@Valid ExerciseEntity exercise);
+
+    /**
      * Updates an existing exercise entity.
      *
      * @param exerciseId the ID of the exercise entity to update
@@ -104,5 +113,12 @@ public interface ExerciseService {
             String newVideoUrl,
             Boolean isVisible
     );
+
+    /**
+     * Deletes an exercise entity by its ID.
+     *
+     * @param id the ID of the exercise entity to delete
+     */
+    void deleteExerciseById(Long id);
 
 }
