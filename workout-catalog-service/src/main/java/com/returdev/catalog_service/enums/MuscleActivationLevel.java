@@ -1,5 +1,6 @@
 package com.returdev.catalog_service.enums;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.returdev.catalog_service.utils.EnumUtil;
 
 /**
@@ -12,6 +13,7 @@ public enum MuscleActivationLevel {
     MEDIUM,
     HIGH;
 
+    @JsonCreator
     public static MuscleActivationLevel fromString(String value) {
         return EnumUtil.fromString(MuscleActivationLevel.class, value);
     }
