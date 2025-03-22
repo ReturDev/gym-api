@@ -83,7 +83,7 @@ public class EquipmentServiceImpl implements EquipmentService {
     @Override
     public boolean updateEquipment(Long id, String name, String imageUrl) {
         existsById(id);
-        if (name != null) {
+        if (name != null && !name.isBlank()) {
             return equipmentRepository.updateEquipmentName(id, name) == 1;
         }
         if (imageUrl != null) {
