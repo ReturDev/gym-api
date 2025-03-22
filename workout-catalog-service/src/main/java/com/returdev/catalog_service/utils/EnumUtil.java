@@ -1,4 +1,4 @@
-package com.returdev.catalog_service.utilities;
+package com.returdev.catalog_service.utils;
 
 import com.returdev.catalog_service.exceptions.InvalidEnumValueException;
 

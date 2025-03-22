@@ -1,6 +1,6 @@
 package com.returdev.catalog_service.enums;
 
-import com.returdev.catalog_service.utilities.EnumUtil;
+import com.returdev.catalog_service.utils.EnumUtil;
 
 /**
  * Enum representing different muscular groups in the system.
