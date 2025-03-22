@@ -25,13 +25,12 @@ public class EquipmentEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Size(min = 3, max = 25, message = "{validation.size.message}")
-    @NotNull(message = "{validation.not_null_required.message}")
+    @Size(min = 3, max = 25)
+    @NotNull
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
-    @URL(message = "{validation.url.message}")
-    @NotNull(message = "{validation.not_null_required.message}")
+    @NotNull
     @Column(name = "image_url", nullable = false)
     private String imageUrl;
 
