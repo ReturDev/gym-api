@@ -1,6 +1,7 @@
 package com.returdev.catalog_service.controllers;
 
 
+import com.returdev.catalog_service.dtos.content.ContentResponseDTO;
 import com.returdev.catalog_service.dtos.equipment.EquipmentRequestDTO;
 import com.returdev.catalog_service.dtos.equipment.EquipmentResponseDTO;
 import com.returdev.catalog_service.mappers.EquipmentMapper;
@@ -25,17 +26,17 @@ public class EquipmentController {
     private final EquipmentMapper equipmentMapper;
 
     /**
-     * Creates a new equipment entity.
+     * Saves a new equipment entity.
      *
-     * @param newEquipment the equipment data to create
-     * @return the created equipment response DTO
+     * @param newEquipment the equipment data to save
+     * @return the saved equipment response DTO
      */
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public EquipmentResponseDTO saveEquipment(@Valid @RequestBody EquipmentRequestDTO newEquipment) {
-        return equipmentMapper.toResponseDto(
+    public ContentResponseDTO<EquipmentResponseDTO> saveEquipment(@Valid @RequestBody EquipmentRequestDTO newEquipment) {
+        return equipmentMapper.toContentResponse(
                 equipmentService.saveEquipment(
-                        equipmentMapper.toEntity(newEquipment)
+                        equipmentMapper.mapToEntity(newEquipment)
                 )
         );
     }
@@ -43,12 +44,12 @@ public class EquipmentController {
     /**
      * Retrieves all equipment entities.
      *
-     * @return a list of all equipment response DTOs
+     * @return a content response DTO containing a list of all equipment response DTOs
      */
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
-    public List<EquipmentResponseDTO> getAllEquipments() {
-        return equipmentService.getAllEquipments().stream().map(equipmentMapper::toResponseDto).toList();
+    public ContentResponseDTO<List<EquipmentResponseDTO>> getAllEquipments() {
+        return equipmentMapper.toContentResponse(equipmentService.getAllEquipments());
     }
 
     /**
@@ -59,8 +60,8 @@ public class EquipmentController {
      */
     @GetMapping("/id/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public EquipmentResponseDTO getEquipmentById(@PathVariable("id") Long id) {
-        return equipmentMapper.toResponseDto(
+    public ContentResponseDTO<EquipmentResponseDTO> getEquipmentById(@PathVariable("id") Long id) {
+        return equipmentMapper.toContentResponse(
                 equipmentService.getEquipmentById(id)
         );
     }
@@ -73,12 +74,11 @@ public class EquipmentController {
      */
     @GetMapping("/name/{name}")
     @ResponseStatus(HttpStatus.OK)
-    public EquipmentResponseDTO getEquipmentByName(@PathVariable("name") String name) {
-        return equipmentMapper.toResponseDto(
+    public ContentResponseDTO<EquipmentResponseDTO> getEquipmentByName(@PathVariable("name") String name) {
+        return equipmentMapper.toContentResponse(
                 equipmentService.getEquipmentByName(name)
         );
     }
-
 
     /**
      * Checks if an equipment entity exists by its name.
@@ -115,7 +115,7 @@ public class EquipmentController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateEquipment(@Valid @RequestBody EquipmentRequestDTO equipmentRequestDTO) {
         equipmentService.updateEquipment(
-                equipmentMapper.toEntity(equipmentRequestDTO)
+                equipmentMapper.mapToEntity(equipmentRequestDTO)
         );
     }
 
