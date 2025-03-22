@@ -1,5 +1,6 @@
 package com.returdev.catalog_service.enums;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.returdev.catalog_service.utils.EnumUtil;
 
 /**
@@ -14,6 +15,7 @@ public enum MuscularGroup {
     LEGS,
     ABDOMEN;
 
+    @JsonCreator
     public static MuscularGroup fromString(String value) {
         return EnumUtil.fromString(MuscularGroup.class, value);
     }
