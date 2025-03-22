@@ -2,8 +2,10 @@ package com.returdev.catalog_service.dtos.exercise;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.returdev.catalog_service.dtos.equipment.EquipmentRequestDTO;
+import com.returdev.catalog_service.dtos.equipment.EquipmentResponseDTO;
 import com.returdev.catalog_service.dtos.muscle.involved.MuscleInvolvedResponseDTO;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -28,9 +30,9 @@ public record ExerciseResponseDTO(
         String description,
         @JsonProperty("is_bench_required") boolean benchRequired,
         @JsonProperty("muscles_involved") List<MuscleInvolvedResponseDTO> musclesInvolved,
-        EquipmentRequestDTO equipment,
+        EquipmentResponseDTO equipment,
         @JsonProperty("image_url") String imageUrl,
         @JsonProperty("video_url") String videoUrl,
-        @JsonProperty("created_at") Date createdAt,
+        @JsonProperty("created_at") LocalDateTime createdAt,
         @JsonProperty("is_visible") boolean isVisible
 ) {}
