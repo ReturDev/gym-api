@@ -35,7 +35,7 @@ public class ExerciseEntity {
 
     @Size(min = 3,max = 50)
     @NotNull
-    @Column(name = "name", nullable = false, length = 50)
+    @Column(name = "name", nullable = false, length = 50, updatable = false)
     private String name;
 
     @Lob
@@ -58,7 +58,7 @@ public class ExerciseEntity {
     private List<MuscleInvolvedEntity> musclesInvolved;
 
     @ManyToOne(cascade = CascadeType.MERGE, optional = false)
-    @JoinColumn(name = "equipment_id")
+    @JoinColumn(name = "equipment_id", updatable = false)
     private EquipmentEntity equipment;
 
     @NotNull
