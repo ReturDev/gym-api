@@ -129,7 +129,7 @@ public class EquipmentController {
     @PatchMapping("/name/{id}")
     public ResponseEntity<Void> updateEquipmentName(@PathVariable("id") Long id, @RequestBody String newName) {
         if (equipmentService.updateEquipment(id, newName, null)) {
-            return ResponseEntity.ok().build();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
         return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
     }
@@ -144,7 +144,7 @@ public class EquipmentController {
     @PatchMapping("imageUrl/{id}")
     public ResponseEntity<Void> updateEquipmentImageUrl(@PathVariable("id") Long id, @RequestBody String newImageUrl) {
         if (equipmentService.updateEquipment(id, null, newImageUrl)) {
-            return ResponseEntity.ok().build();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
         return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
     }
