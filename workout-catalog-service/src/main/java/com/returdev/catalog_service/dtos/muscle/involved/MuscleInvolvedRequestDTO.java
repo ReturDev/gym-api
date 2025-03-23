@@ -3,6 +3,8 @@ package com.returdev.catalog_service.dtos.muscle.involved;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.returdev.catalog_service.dtos.muscle.MuscleRequestDTO;
 import com.returdev.catalog_service.enums.MuscleActivationLevel;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 
 /**
  * Data Transfer Object (DTO) for representing a muscle involved in an exercise.
@@ -12,6 +14,6 @@ import com.returdev.catalog_service.enums.MuscleActivationLevel;
  * @param activationLevel the level of activation of the muscle during the exercise
  */
 public record MuscleInvolvedRequestDTO(
-        MuscleRequestDTO muscle,
-        @JsonProperty("activation_level") MuscleActivationLevel activationLevel
+        @Valid @NotNull MuscleRequestDTO muscle,
+        @NotNull @JsonProperty("activation_level") MuscleActivationLevel activationLevel
 ) {}
