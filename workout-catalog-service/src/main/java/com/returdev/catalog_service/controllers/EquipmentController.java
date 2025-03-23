@@ -126,7 +126,7 @@ public class EquipmentController {
      * @param newName the new name of the equipment entity
      * @return a response entity indicating the result of the operation
      */
-    @PatchMapping("/name/{id}")
+    @PatchMapping("/{id}/name")
     public ResponseEntity<Void> updateEquipmentName(@PathVariable("id") Long id, @RequestBody String newName) {
         if (equipmentService.updateEquipment(id, newName, null)) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
@@ -141,7 +141,7 @@ public class EquipmentController {
      * @param newImageUrl the new image URL of the equipment entity
      * @return a response entity indicating the result of the operation
      */
-    @PatchMapping("imageUrl/{id}")
+    @PatchMapping("/{id}/imageUrl")
     public ResponseEntity<Void> updateEquipmentImageUrl(@PathVariable("id") Long id, @RequestBody String newImageUrl) {
         if (equipmentService.updateEquipment(id, null, newImageUrl)) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
