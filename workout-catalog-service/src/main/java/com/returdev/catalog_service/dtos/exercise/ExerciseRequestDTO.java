@@ -7,7 +7,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import org.hibernate.validator.constraints.URL;
 
 import java.util.List;
 
@@ -22,7 +21,7 @@ public record ExerciseRequestDTO(
         @JsonProperty("is_bench_required") @NotNull Boolean benchRequired,
         @JsonProperty("muscles_involved") @NotEmpty List<MuscleInvolvedRequestDTO> musclesInvolved,
         @NotNull EquipmentRequestDTO equipment,
-        @JsonProperty("image_url") @URL @NotNull String imageUrl,
-        @JsonProperty("video_url") @URL @NotNull String videoUrl,
+        @JsonProperty("image_url") @NotNull String imageUrl,
+        @JsonProperty("video_url") @NotNull String videoUrl,
         @JsonProperty("is_visible") @NotNull Boolean isVisible
 ) {}
