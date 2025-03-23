@@ -16,7 +16,7 @@ import java.util.List;
  * including its name and the muscular group it belongs to.
  */
 @Entity
-@Table(name = "muscles")
+@Table(name = "muscles", uniqueConstraints = @UniqueConstraint(columnNames = {"name", "muscularGroup"}))
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
