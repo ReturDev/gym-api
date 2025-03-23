@@ -108,7 +108,7 @@ public interface ExerciseService {
             @ValidId Long exerciseId,
             String newDescription,
             Boolean isBenchRequired,
-            List<MuscleInvolvedEntity> musclesInvolved,
+            @Valid List<MuscleInvolvedEntity> musclesInvolved,
             String newImageUrl,
             String newVideoUrl,
             Boolean isVisible
@@ -119,6 +119,6 @@ public interface ExerciseService {
      *
      * @param id the ID of the exercise entity to delete
      */
-    void deleteExerciseById(Long id);
+    void deleteExerciseById(@ValidId Long id);
 
 }
