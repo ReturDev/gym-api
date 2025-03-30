@@ -3,6 +3,8 @@ package com.returdev.catalog_service.mappers;
 import com.returdev.catalog_service.dtos.equipment.EquipmentRequestDTO;
 import com.returdev.catalog_service.dtos.equipment.EquipmentResponseDTO;
 import com.returdev.catalog_service.entities.EquipmentEntity;
+import com.returdev.utils_library.mappers.ModelMapper;
+import com.returdev.utils_library.utils.EnumUtil;
 import org.springframework.stereotype.Component;
 
 /**
@@ -39,5 +41,27 @@ public class EquipmentMapper implements ModelMapper<EquipmentResponseDTO, Equipm
                 requestDto.name(),
                 requestDto.imageUrl()
         );
+    }
+
+    @Override
+    public String verifyOrderBy(String orderBy) {
+        return (orderBy != null ? EquipmentOrderBy.valueOf(orderBy) : EquipmentOrderBy.ID).entityPropertyName;
+    }
+
+    private enum EquipmentOrderBy {
+
+        ID("id"),
+        NAME("name");
+
+        private final String entityPropertyName;
+
+        EquipmentOrderBy(String entityPropertyName) {
+            this.entityPropertyName = entityPropertyName;
+        }
+
+        public static EquipmentOrderBy fromString(String value) {
+            return EnumUtil.fromString(EquipmentOrderBy.class, value);
+        }
+
     }
 }
