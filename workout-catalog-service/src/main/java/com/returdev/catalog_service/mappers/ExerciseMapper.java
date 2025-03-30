@@ -3,6 +3,8 @@ package com.returdev.catalog_service.mappers;
 import com.returdev.catalog_service.dtos.exercise.ExerciseRequestDTO;
 import com.returdev.catalog_service.dtos.exercise.ExerciseResponseDTO;
 import com.returdev.catalog_service.entities.ExerciseEntity;
+import com.returdev.utils_library.mappers.ModelMapper;
+import com.returdev.utils_library.utils.EnumUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -61,4 +63,26 @@ public class ExerciseMapper implements ModelMapper<ExerciseResponseDTO, Exercise
         );
     }
 
+    @Override
+    public String verifyOrderBy(String orderBy) {
+        return (orderBy != null ? ExerciseOrderBy.valueOf(orderBy) : ExerciseOrderBy.ID).entityPropertyName;
+    }
+
+
+    private enum ExerciseOrderBy {
+
+        ID("id"),
+        NAME("name");
+
+        private final String entityPropertyName;
+
+        ExerciseOrderBy(String entityPropertyName) {
+            this.entityPropertyName = entityPropertyName;
+        }
+
+        public static ExerciseOrderBy fromString(String value) {
+            return EnumUtil.fromString(ExerciseOrderBy.class, value);
+        }
+
+    }
 }
