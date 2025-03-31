@@ -1,10 +1,10 @@
 package com.returdev.catalog_service.services.exercise;
 
 
-import com.returdev.catalog_service.annotations.validation.ValidId;
 import com.returdev.catalog_service.entities.ExerciseEntity;
 import com.returdev.catalog_service.entities.MuscleInvolvedEntity;
 import com.returdev.catalog_service.enums.MuscleActivationLevel;
+import com.returdev.utils_library.annotations.ValidId;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
