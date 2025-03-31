@@ -3,6 +3,7 @@ package com.returdev.catalog_service.mappers;
 import com.returdev.catalog_service.dtos.muscle.involved.MuscleInvolvedRequestDTO;
 import com.returdev.catalog_service.dtos.muscle.involved.MuscleInvolvedResponseDTO;
 import com.returdev.catalog_service.entities.MuscleInvolvedEntity;
+import com.returdev.utils_library.mappers.ModelMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -44,5 +45,10 @@ public class MuscleInvolvedMapper implements ModelMapper<MuscleInvolvedResponseD
                 muscleMapper.mapToEntity(requestDto.muscle()),
                 requestDto.activationLevel()
         );
+    }
+
+    @Override
+    public String verifyOrderBy(String orderBy) {
+        return "";
     }
 }
