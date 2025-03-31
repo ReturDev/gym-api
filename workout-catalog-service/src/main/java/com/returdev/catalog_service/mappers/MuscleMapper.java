@@ -3,6 +3,7 @@ package com.returdev.catalog_service.mappers;
 import com.returdev.catalog_service.dtos.muscle.MuscleRequestDTO;
 import com.returdev.catalog_service.dtos.muscle.MuscleResponseDTO;
 import com.returdev.catalog_service.entities.MuscleEntity;
+import com.returdev.utils_library.mappers.ModelMapper;
 import org.springframework.stereotype.Component;
 
 /**
@@ -41,5 +42,10 @@ public class MuscleMapper implements ModelMapper<MuscleResponseDTO, MuscleReques
                 requestDto.muscularGroup(),
                 null
         );
+    }
+
+    @Override
+    public String verifyOrderBy(String orderBy) {
+        return "";
     }
 }
