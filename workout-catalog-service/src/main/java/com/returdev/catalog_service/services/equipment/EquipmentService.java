@@ -1,10 +1,11 @@
 package com.returdev.catalog_service.services.equipment;
 
-import com.returdev.catalog_service.annotations.validation.ValidId;
 import com.returdev.catalog_service.entities.EquipmentEntity;
+import com.returdev.utils_library.annotations.ValidId;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.validation.annotation.Validated;
 
