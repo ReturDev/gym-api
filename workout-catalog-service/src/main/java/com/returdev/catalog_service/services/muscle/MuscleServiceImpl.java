@@ -5,6 +5,7 @@ import com.returdev.catalog_service.entities.MuscleInvolvedEntity;
 import com.returdev.catalog_service.enums.MuscleActivationLevel;
 import com.returdev.catalog_service.enums.MuscularGroup;
 import com.returdev.catalog_service.repositories.MuscleRepository;
+import com.returdev.utils_library.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,9 +31,7 @@ public class MuscleServiceImpl implements MuscleService {
      */
     @Override
     public MuscleEntity saveMuscle(MuscleEntity muscleEntity) {
-        if (muscleEntity.getId() != null) {
-            throw new IllegalArgumentException("Muscle entity already has an ID.");
-        }
+        muscleEntity.setId(null);
         muscleEntity.setMuscleInvolvedEntities(
                 List.of(
                         new MuscleInvolvedEntity(MuscleActivationLevel.LOW),
@@ -73,7 +72,7 @@ public class MuscleServiceImpl implements MuscleService {
      */
     @Override
     public MuscleEntity getMuscleById(Long id) {
-        return muscleRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Muscle entity not found."));
+        return muscleRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
     /**
@@ -85,7 +84,7 @@ public class MuscleServiceImpl implements MuscleService {
      */
     @Override
     public MuscleEntity getMuscleByName(String name) {
-        return muscleRepository.findMuscleByName(name).orElseThrow(() -> new EntityNotFoundException("Muscle entity not found."));
+        return muscleRepository.findMuscleByName(name).orElseThrow(() -> new ResourceNotFoundException(name));
     }
 
     /**
