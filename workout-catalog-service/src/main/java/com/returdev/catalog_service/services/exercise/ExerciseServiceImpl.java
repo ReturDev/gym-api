@@ -4,6 +4,7 @@ import com.returdev.catalog_service.entities.ExerciseEntity;
 import com.returdev.catalog_service.entities.MuscleInvolvedEntity;
 import com.returdev.catalog_service.enums.MuscleActivationLevel;
 import com.returdev.catalog_service.repositories.ExerciseRepository;
+import com.returdev.utils_library.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -26,7 +27,7 @@ public class ExerciseServiceImpl implements ExerciseService {
      */
     @Override
     public ExerciseEntity getExerciseEntityById(Long exerciseId) {
-        return exerciseRepository.findById(exerciseId).orElseThrow(() -> new EntityNotFoundException("")); //TODO Add message
+        return exerciseRepository.findById(exerciseId).orElseThrow(() -> new ResourceNotFoundException(exerciseId));
     }
 
     /**
@@ -74,6 +75,7 @@ public class ExerciseServiceImpl implements ExerciseService {
      */
     @Override
     public ExerciseEntity saveExercise(ExerciseEntity exercise) {
+        exercise.setId(null);
         return exerciseRepository.save(exercise);
     }
 
@@ -138,7 +140,7 @@ public class ExerciseServiceImpl implements ExerciseService {
      */
     private void existsById(Long id) {
         if (!exerciseRepository.existsById(id)) {
-            throw new EntityNotFoundException(""); //TODO Add message
+            throw new ResourceNotFoundException(id);
         }
     }
 
