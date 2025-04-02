@@ -2,6 +2,7 @@ package com.returdev.catalog_service.services.muscle;
 
 import com.returdev.catalog_service.entities.MuscleEntity;
 import com.returdev.catalog_service.enums.MuscularGroup;
+import com.returdev.utils_library.annotations.ValidId;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -29,7 +30,7 @@ public interface MuscleService {
      * @param id the ID of the muscle entity
      * @return the muscle entity with the specified ID
      */
-    MuscleEntity getMuscleById(@NotNull(message = "{validation.id.not_null_required.message}") Long id);
+    MuscleEntity getMuscleById(@ValidId Long id);
 
     /**
      * Retrieves a muscle entity by its name.
@@ -52,9 +53,7 @@ public interface MuscleService {
      * @param muscularGroup the muscular group of the muscle entities
      * @return a list of muscle entities belonging to the specified muscular group
      */
-    List<MuscleEntity> getMusclesOfMuscleGroup(
-            @NotNull(message = "{validation.id.not_null_required.message}") MuscularGroup muscularGroup
-    );
+    List<MuscleEntity> getMusclesOfMuscleGroup(@NotNull MuscularGroup muscularGroup);
 
 
     /**
@@ -62,5 +61,5 @@ public interface MuscleService {
      *
      * @param id the ID of the muscle entity to delete
      */
-    void deleteMuscleById(@NotNull(message = "{validation.id.not_null_required.message}") Long id);
+    void deleteMuscleById(@ValidId Long id);
 }
