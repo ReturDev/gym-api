@@ -2,6 +2,7 @@ package com.returdev.catalog_service.services.equipment;
 
 import com.returdev.catalog_service.entities.EquipmentEntity;
 import com.returdev.catalog_service.repositories.EquipmentRepository;
+import com.returdev.utils_library.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,10 +22,8 @@ public class EquipmentServiceImpl implements EquipmentService {
      * {@inheritDoc}
      */
     @Override
-    public EquipmentEntity saveEquipment(EquipmentEntity equipment) throws IllegalArgumentException {
-        if (equipment.getId() != null) {
-            throw new IllegalArgumentException("");//TODO Add message
-        }
+    public EquipmentEntity saveEquipment(EquipmentEntity equipment) {
+        equipment.setId(null);
         return equipmentRepository.save(equipment);
     }
 
@@ -41,7 +40,7 @@ public class EquipmentServiceImpl implements EquipmentService {
      */
     @Override
     public EquipmentEntity getEquipmentById(Long id) {
-        return equipmentRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(""));//TODO Add message
+        return equipmentRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
     /**
@@ -49,7 +48,7 @@ public class EquipmentServiceImpl implements EquipmentService {
      */
     @Override
     public EquipmentEntity getEquipmentByName(String name) {
-        return equipmentRepository.findEquipmentByName(name).orElseThrow(() -> new EntityNotFoundException("")); //TODO Add message
+        return equipmentRepository.findEquipmentByName(name).orElseThrow(() -> new ResourceNotFoundException(name)); //TODO Add message
     }
 
     /**
@@ -100,7 +99,7 @@ public class EquipmentServiceImpl implements EquipmentService {
      */
     private void existsById(Long id) {
         if (!equipmentRepository.existsById(id)) {
-            throw new EntityNotFoundException(""); //TODO Add message
+            throw new ResourceNotFoundException(id);
         }
     }
 }
