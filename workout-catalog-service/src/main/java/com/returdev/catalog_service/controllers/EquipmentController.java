@@ -1,15 +1,16 @@
 package com.returdev.catalog_service.controllers;
 
 
-import com.returdev.catalog_service.dtos.content.ContentResponseDTO;
 import com.returdev.catalog_service.dtos.equipment.EquipmentRequestDTO;
 import com.returdev.catalog_service.dtos.equipment.EquipmentResponseDTO;
 import com.returdev.catalog_service.mappers.EquipmentMapper;
 import com.returdev.catalog_service.services.equipment.EquipmentService;
+import com.returdev.utils_library.dtos.content.ContentResponseDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,6 +32,7 @@ public class EquipmentController {
      * @param newEquipment the equipment data to save
      * @return the saved equipment response DTO
      */
+    @PreAuthorize("hasAuthority('EXERCISE_SYSTEM_WRITE')")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ContentResponseDTO<EquipmentResponseDTO> saveEquipment(@Valid @RequestBody EquipmentRequestDTO newEquipment) {
@@ -46,6 +48,7 @@ public class EquipmentController {
      *
      * @return a content response DTO containing a list of all equipment response DTOs
      */
+    @PreAuthorize("hasAuthority('EXERCISE_SYSTEM_READ')")
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
     public ContentResponseDTO<List<EquipmentResponseDTO>> getAllEquipments() {
@@ -58,7 +61,8 @@ public class EquipmentController {
      * @param id the ID of the equipment entity
      * @return the equipment response DTO
      */
-    @GetMapping("/id/{id}")
+    @PreAuthorize("hasAuthority('EXERCISE_SYSTEM_READ')")
+    @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ContentResponseDTO<EquipmentResponseDTO> getEquipmentById(@PathVariable("id") Long id) {
         return equipmentMapper.toContentResponse(
@@ -72,7 +76,8 @@ public class EquipmentController {
      * @param name the name of the equipment entity
      * @return the equipment response DTO
      */
-    @GetMapping("/name/{name}")
+    @PreAuthorize("hasAuthority('EXERCISE_SYSTEM_READ')")
+    @GetMapping("/by-name/{name}")
     @ResponseStatus(HttpStatus.OK)
     public ContentResponseDTO<EquipmentResponseDTO> getEquipmentByName(@PathVariable("name") String name) {
         return equipmentMapper.toContentResponse(
@@ -86,7 +91,8 @@ public class EquipmentController {
      * @param name the name of the equipment entity
      * @return a ResponseEntity indicating the result of the existence check
      */
-    @GetMapping("/exists/{name}")
+    @PreAuthorize("hasAuthority('EXERCISE_SYSTEM_READ')")
+    @GetMapping("/by-name/{name}/exists")
     public ResponseEntity<Void> equipmentExistsByName(@PathVariable("name") String name) {
         if (equipmentService.existsByName(name)) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
@@ -100,6 +106,7 @@ public class EquipmentController {
      *
      * @param id the ID of the equipment entity to delete
      */
+    @PreAuthorize("hasAuthority('EXERCISE_SYSTEM_WRITE')")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteEquipmentById(@PathVariable("id") Long id) {
@@ -111,6 +118,7 @@ public class EquipmentController {
      *
      * @param equipmentRequestDTO the equipment data to update
      */
+    @PreAuthorize("hasAuthority('EXERCISE_SYSTEM_WRITE')")
     @PutMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateEquipment(@Valid @RequestBody EquipmentRequestDTO equipmentRequestDTO) {
@@ -126,6 +134,7 @@ public class EquipmentController {
      * @param newName the new name of the equipment entity
      * @return a response entity indicating the result of the operation
      */
+    @PreAuthorize("hasAuthority('EXERCISE_SYSTEM_WRITE')")
     @PatchMapping("/{id}/name")
     public ResponseEntity<Void> updateEquipmentName(@PathVariable("id") Long id, @RequestBody String newName) {
         if (equipmentService.updateEquipment(id, newName, null)) {
@@ -141,6 +150,7 @@ public class EquipmentController {
      * @param newImageUrl the new image URL of the equipment entity
      * @return a response entity indicating the result of the operation
      */
+    @PreAuthorize("hasAuthority('EXERCISE_SYSTEM_WRITE')")
     @PatchMapping("/{id}/imageUrl")
     public ResponseEntity<Void> updateEquipmentImageUrl(@PathVariable("id") Long id, @RequestBody String newImageUrl) {
         if (equipmentService.updateEquipment(id, null, newImageUrl)) {
