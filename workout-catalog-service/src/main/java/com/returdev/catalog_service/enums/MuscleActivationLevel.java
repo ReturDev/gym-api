@@ -1,7 +1,7 @@
 package com.returdev.catalog_service.enums;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.returdev.catalog_service.utils.EnumUtil;
+import com.returdev.utils_library.utils.EnumUtil;
 
 /**
  * Enum representing different levels of muscle activation.
