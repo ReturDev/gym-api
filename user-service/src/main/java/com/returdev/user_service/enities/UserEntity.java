@@ -5,6 +5,9 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.util.UUID;
@@ -14,6 +17,9 @@ import java.util.UUID;
  * Entity class representing a user in the system.
  * This entity is mapped to the "users" table in the database.
  */
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
 @Entity
 @Table(name = "users")
 public class UserEntity {
@@ -76,5 +82,37 @@ public class UserEntity {
     @ManyToOne(cascade = CascadeType.MERGE, optional = false)
     @JoinColumn(name = "user_role_id", nullable = false)
     private UserRoleEntity userRole;
+
+    /**
+     * Indicates whether the user's email is verified.
+     */
+    private boolean isVerified;
+
+    /**
+     * Indicates whether the user is enabled.
+     * Defaults to true.
+     */
+    private boolean isEnabled = true;
+
+    /**
+     * Constructs a new UserEntity with the specified parameters.
+     *
+     * @param id the unique identifier of the user
+     * @param username the username of the user
+     * @param name the first name of the user
+     * @param surnames the surnames of the user
+     * @param email the email address of the user
+     * @param password the password of the user
+     * @param userRole the role of the user
+     */
+    public UserEntity(UUID id, String username, String name, String surnames, String email, String password, UserRoleEntity userRole) {
+        this.id = id;
+        this.username = username;
+        this.name = name;
+        this.surnames = surnames;
+        this.email = email;
+        this.password = password;
+        this.userRole = userRole;
+    }
 
 }
