@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
@@ -11,6 +14,9 @@ import java.util.List;
  * Entity class representing a user role in the system.
  * This entity is mapped to the "user_roles" table in the database.
  */
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
 @Entity
 @Table(name = "user_roles")
 public class UserRoleEntity {
