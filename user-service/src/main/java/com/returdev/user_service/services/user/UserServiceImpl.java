@@ -1,4 +1,4 @@
-package com.returdev.user_service.services;
+package com.returdev.user_service.services.user;
 
 import com.returdev.user_service.enities.UserEntity;
 import com.returdev.user_service.repositories.UserRepository;
