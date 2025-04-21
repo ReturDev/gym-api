@@ -105,6 +105,9 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public void updateUserInfo(@NotNull UUID userId, String username, String name, String surnames) {
+
+        existsById(userId);
+
         if (username != null) {
             updateUsername(userId, username);
         }
@@ -126,6 +129,9 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public void changeRole(UUID userId, String roleName) {
+
+        existsById(userId);
+
         if (userRepository.changeUserRoleById(userId, roleName) != 1) {
             throwUpdateDataBaseOperationException();
         }
@@ -138,6 +144,9 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public void verifyUser(UUID userId) {
+
+        existsById(userId);
+
         if (userRepository.verifyUserById(userId) != 1) {
             throwUpdateDataBaseOperationException();
         }
@@ -150,6 +159,9 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public void disableUser(UUID userId) {
+
+        existsById(userId);
+
         if (userRepository.updateEnabledStatusById(userId, false) != 1) {
             throwUpdateDataBaseOperationException();
         }
@@ -163,6 +175,9 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public void enableUser(UUID userId) {
+
+        existsById(userId);
+
         if (userRepository.updateEnabledStatusById(userId, true) != 1) {
             throwUpdateDataBaseOperationException();
         }
@@ -237,4 +252,18 @@ public class UserServiceImpl implements UserService {
             throwUpdateDataBaseOperationException();
         }
     }
+
+    /**
+     * Checks if a user exists by their unique ID.
+     * If the user does not exist, throws a ResourceNotFoundException.
+     *
+     * @param userId the unique identifier of the user
+     * @throws ResourceNotFoundException if no user is found with the given ID
+     */
+    private void existsById(UUID userId) {
+        if (!userRepository.existsById(userId)) {
+            throw new ResourceNotFoundException("exception.ResourceNotFoundException.id.message", userId);
+        }
+    }
+
 }
