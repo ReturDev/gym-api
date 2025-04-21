@@ -70,6 +70,7 @@ public interface UserService {
      * @param userId the unique identifier of the user
      * @param roleName the name of the new role to assign
      */
+    @Transactional
     void changeRole(@NotNull UUID userId, @NotBlank String roleName);
 
     /**
@@ -77,6 +78,7 @@ public interface UserService {
      *
      * @param userId the unique identifier of the user
      */
+    @Transactional
     void verifyUser(@NotNull UUID userId);
 
     /**
@@ -84,6 +86,7 @@ public interface UserService {
      *
      * @param userId the unique identifier of the user
      */
+    @Transactional
     void disableUser(@NotNull UUID userId);
 
     /**
@@ -91,6 +94,7 @@ public interface UserService {
      *
      * @param userId the unique identifier of the user
      */
+    @Transactional
     void enableUser(@NotNull UUID userId);
 
     /**
