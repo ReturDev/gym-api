@@ -1,7 +1,7 @@
 package com.returdev.user_service.services.user;
 
 import com.returdev.user_service.annotations.validations.ValidPassword;
-import com.returdev.user_service.enities.UserEntity;
+import com.returdev.user_service.entities.UserEntity;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
@@ -18,13 +18,16 @@ import java.util.UUID;
  */
 public interface UserService {
 
+
     /**
-     * Retrieves a user entity by their email address.
-     *
-     * @param email the email address of the user
-     * @return the user entity associated with the given email
-     */
-    UserEntity getUserByEmail(@Email String email);
+         * Retrieves a user entity by their email address.
+         * If the `includePassword` flag is false, the user's password is excluded from the returned entity.
+         *
+         * @param email the email address of the user
+         * @param includePassword a flag indicating whether to include the user's password in the response
+         * @return the user entity associated with the given email address
+         */
+        UserEntity getUserByEmail(@Email String email, boolean includePassword);
 
     /**
      * Retrieves a user entity by their unique ID.
