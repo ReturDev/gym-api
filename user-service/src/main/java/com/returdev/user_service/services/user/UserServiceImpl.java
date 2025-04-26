@@ -1,9 +1,10 @@
 package com.returdev.user_service.services.user;
 
-import com.returdev.user_service.enities.UserEntity;
+import com.returdev.user_service.entities.UserEntity;
 import com.returdev.user_service.repositories.UserRepository;
 import com.returdev.utils_library.exceptions.DataBaseOperationException;
 import com.returdev.utils_library.exceptions.IncorrectPasswordException;
+import com.returdev.utils_library.exceptions.NoDataToUpdateException;
 import com.returdev.utils_library.exceptions.ResourceNotFoundException;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -29,16 +30,24 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     /**
-     * Retrieves a user entity by their email address.
-     *
-     * @param email the email address of the user
-     * @return the user entity associated with the given email
-     * @throws ResourceNotFoundException if no user is found with the given email
-     */
-    @Override
-    public UserEntity getUserByEmail(String email) {
-        return userRepository.findUserByEmail(email).orElseThrow(ResourceNotFoundException::new);
-    }
+         * Retrieves a user entity by their email address.
+         * If the `includePassword` flag is false, the user's password is excluded from the returned entity.
+         *
+         * @param email the email address of the user
+         * @param includePassword a flag indicating whether to include the user's password in the response
+         * @return the user entity associated with the given email address
+         * @throws ResourceNotFoundException if no user is found with the given email address
+         */
+        @Override
+        public UserEntity getUserByEmail(String email, boolean includePassword) {
+            UserEntity user = userRepository.findUserByEmail(email).orElseThrow(ResourceNotFoundException::new);
+
+            if (!includePassword){
+                user.setPassword(null);
+            }
+
+            return user;
+        }
 
     /**
      * Retrieves a user entity by their unique ID.
@@ -49,7 +58,11 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public UserEntity getUserById(UUID id) {
-        return userRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
+        UserEntity user = userRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
+        user.setPassword(null);
+
+        return user;
+
     }
 
     /**
@@ -75,7 +88,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public void updatePasswordByEmail(String email, String oldPassword, String newPassword) {
-        String encodedPassword = getUserByEmail(email).getPassword();
+        String encodedPassword = getUserByEmail(email, true).getPassword();
 
         if (!passwordEncoder.matches(oldPassword, encodedPassword)) {
             throw new IncorrectPasswordException();
@@ -95,31 +108,39 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * Updates the user information such as username, name, and surnames.
-     *
-     * @param userId the unique identifier of the user
-     * @param username the new username to set
-     * @param name the new name to set
-     * @param surnames the new surnames to set
-     * @throws DataBaseOperationException if any update operation fails
-     */
-    @Override
-    public void updateUserInfo(@NotNull UUID userId, String username, String name, String surnames) {
+         * Updates the user information for a given user ID.
+         * Allows updating the username, name, and/or surnames of the user.
+         * If all parameters (username, name, and surnames) are null, a NoDataToUpdateException is thrown.
+         * Ensures the user exists before attempting updates.
+         *
+         * @param userId the unique identifier of the user
+         * @param username the new username to set, or null if not updating
+         * @param name the new name to set, or null if not updating
+         * @param surnames the new surnames to set, or null if not updating
+         * @throws NoDataToUpdateException if no data is provided to update
+         * @throws ResourceNotFoundException if the user does not exist
+         */
+        @Override
+        public void updateUserInfo(@NotNull UUID userId, String username, String name, String surnames) {
 
-        existsById(userId);
+            if (username == null && name == null && surnames == null){
+                throw new NoDataToUpdateException();
+            }
 
-        if (username != null) {
-            updateUsername(userId, username);
+            existsById(userId);
+
+            if (username != null) {
+                updateUsername(userId, username);
+            }
+
+            if (name != null) {
+                updateName(userId, name);
+            }
+
+            if (surnames != null) {
+                updateSurnames(userId, surnames);
+            }
         }
-
-        if (name != null) {
-            updateName(userId, name);
-        }
-
-        if (surnames != null) {
-            updateSurnames(userId, surnames);
-        }
-    }
 
     /**
      * Changes the role of a user identified by their unique ID.
