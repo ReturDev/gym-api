@@ -2,10 +2,7 @@ package com.returdev.user_service.services.user;
 
 import com.returdev.user_service.entities.UserEntity;
 import com.returdev.user_service.repositories.UserRepository;
-import com.returdev.utils_library.exceptions.DataBaseOperationException;
-import com.returdev.utils_library.exceptions.IncorrectPasswordException;
-import com.returdev.utils_library.exceptions.NoDataToUpdateException;
-import com.returdev.utils_library.exceptions.ResourceNotFoundException;
+import com.returdev.utils_library.exceptions.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.RequiredArgsConstructor;
@@ -127,7 +124,7 @@ public class UserServiceImpl implements UserService {
                 throw new NoDataToUpdateException();
             }
 
-            existsById(userId);
+            notExistsById(userId);
 
             if (username != null) {
                 updateUsername(userId, username);
@@ -151,7 +148,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void changeRole(UUID userId, String roleName) {
 
-        existsById(userId);
+        notExistsById(userId);
 
         if (userRepository.changeUserRoleById(userId, roleName) != 1) {
             throwUpdateDataBaseOperationException();
@@ -166,7 +163,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void verifyUser(UUID userId) {
 
-        existsById(userId);
+        notExistsById(userId);
 
         if (userRepository.verifyUserById(userId) != 1) {
             throwUpdateDataBaseOperationException();
@@ -181,7 +178,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void disableUser(UUID userId) {
 
-        existsById(userId);
+        notExistsById(userId);
 
         if (userRepository.updateEnabledStatusById(userId, false) != 1) {
             throwUpdateDataBaseOperationException();
@@ -197,7 +194,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void enableUser(UUID userId) {
 
-        existsById(userId);
+        notExistsById(userId);
 
         if (userRepository.updateEnabledStatusById(userId, true) != 1) {
             throwUpdateDataBaseOperationException();
@@ -207,12 +204,28 @@ public class UserServiceImpl implements UserService {
 
     /**
      * Saves a new user entity to the database.
+     * <p>
+     * This method ensures that the new user does not have an existing ID and checks
+     * if a user with the same email already exists in the database. If a user with
+     * the same email exists, a ResourceExistsException is thrown. Otherwise, the
+     * new user is saved to the database.
      *
      * @param newUser the user entity to save
      * @return the saved user entity
+     * @throws ResourceExistsException if a user with the same email already exists
      */
     @Override
     public UserEntity saveUser(UserEntity newUser) {
+
+        newUser.setId(null);
+
+        if (userRepository.existsByEmail(newUser.getEmail())) {
+            throw new ResourceExistsException(
+                    "exception.ResourceExistsException.user_email.message",
+                    newUser.getEmail()
+            );
+        }
+
         return userRepository.save(newUser);
     }
 
@@ -281,7 +294,7 @@ public class UserServiceImpl implements UserService {
      * @param userId the unique identifier of the user
      * @throws ResourceNotFoundException if no user is found with the given ID
      */
-    private void existsById(UUID userId) {
+    private void notExistsById(UUID userId) {
         if (!userRepository.existsById(userId)) {
             throw new ResourceNotFoundException("exception.ResourceNotFoundException.id.message", userId);
         }
