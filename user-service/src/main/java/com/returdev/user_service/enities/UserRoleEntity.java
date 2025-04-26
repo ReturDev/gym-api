@@ -1,8 +1,8 @@
 package com.returdev.user_service.enities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,7 +33,7 @@ public class UserRoleEntity {
      * The name of the user role.
      */
     @Size(min = 3, max = 25)
-    @NotNull
+    @NotBlank
     @Column(name = "role_name",length = 25, updatable = false, unique = true, nullable = false)
     private String roleName;
 
