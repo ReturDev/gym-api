@@ -1,5 +1,6 @@
 package com.returdev.user_service.enities;
 
+import com.returdev.user_service.annotations.validations.ValidPassword;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -37,7 +38,7 @@ public class UserEntity {
      * Must be between 3 and 50 characters and cannot be null.
      */
     @Size(min = 3, max = 50)
-    @NotNull
+    @NotBlank
     @Column(name = "username", length = 50, nullable = false)
     private String username;
 
@@ -46,6 +47,7 @@ public class UserEntity {
      * Must be between 3 and 50 characters and cannot be null.
      */
     @Size(min = 3, max = 50)
+    @NotBlank
     @Column(name = "name", length = 50, nullable = false)
     private String name;
 
@@ -54,6 +56,7 @@ public class UserEntity {
      * Must not exceed 50 characters and cannot be null.
      */
     @Size(max = 50)
+    @NotNull
     @Column(name = "surnames", length = 50, nullable = false)
     private String surnames;
 
@@ -70,7 +73,7 @@ public class UserEntity {
      * The password of the user.
      * Cannot be blank and must not be null.
      */
-    @NotBlank
+    @ValidPassword
     @Column(name = "password", nullable = false)
     private String password;
 
