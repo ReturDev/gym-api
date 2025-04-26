@@ -1,6 +1,6 @@
 package com.returdev.user_service.repositories;
 
-import com.returdev.user_service.enities.UserEntity;
+import com.returdev.user_service.entities.UserEntity;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -36,7 +36,15 @@ public interface UserRepository extends JpaRepository<UserEntity, UUID> {
      * @param pageable the pagination information
      * @return a `Page` of `UserEntity` objects matching the role name
      */
-    @Query("SELECT e FROM UserEntity e JOIN e.userRole ur WHERE ur.roleName = :roleName")
+    @Query("""
+        SELECT new com.returdev.user_service.entities.UserEntity(
+            e.id, e.username, e.name, e.surnames,
+            e.email, e.userRole, e.isVerified, e.isEnabled
+        )
+        FROM UserEntity e
+        JOIN e.userRole ur
+        WHERE ur.roleName = :roleName
+    """)
     Page<UserEntity> findUsersByRoleName(@Param("roleName") String roleName, Pageable pageable);
 
     /**
