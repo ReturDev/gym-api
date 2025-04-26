@@ -1,6 +1,6 @@
 package com.returdev.user_service.repositories;
 
-import com.returdev.user_service.enities.UserRoleEntity;
+import com.returdev.user_service.entities.UserRoleEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -2,8 +2,8 @@ package com.returdev.user_service.mappers;
 
 import com.returdev.user_service.dtos.role.UserRoleRequestDTO;
 import com.returdev.user_service.dtos.role.UserRoleResponseDTO;
-import com.returdev.user_service.enities.UserPermissionEntity;
-import com.returdev.user_service.enities.UserRoleEntity;
+import com.returdev.user_service.entities.UserPermissionEntity;
+import com.returdev.user_service.entities.UserRoleEntity;
 import com.returdev.utils_library.mappers.ModelMapper;
 import org.springframework.stereotype.Component;
 

@@ -1,4 +1,4 @@
-package com.returdev.user_service.enities;
+package com.returdev.user_service.entities;
 
 import com.returdev.user_service.annotations.validations.ValidPassword;
 import jakarta.persistence.*;
@@ -118,4 +118,14 @@ public class UserEntity {
         this.userRole = userRole;
     }
 
+    public UserEntity(UUID id, String username, String name, String surnames, String email, UserRoleEntity userRole, boolean isVerified, boolean isEnabled) {
+        this.id = id;
+        this.username = username;
+        this.name = name;
+        this.surnames = surnames;
+        this.email = email;
+        this.userRole = userRole;
+        this.isVerified = isVerified;
+        this.isEnabled = isEnabled;
+    }
 }

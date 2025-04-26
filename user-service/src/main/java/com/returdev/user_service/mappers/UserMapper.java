@@ -2,12 +2,11 @@ package com.returdev.user_service.mappers;
 
 import com.returdev.user_service.dtos.user.UserRequestDTO;
 import com.returdev.user_service.dtos.user.UserResponseDTO;
-import com.returdev.user_service.enities.UserEntity;
-import com.returdev.user_service.enities.UserRoleEntity;
+import com.returdev.user_service.entities.UserEntity;
+import com.returdev.user_service.entities.UserRoleEntity;
 import com.returdev.utils_library.mappers.ModelMapper;
 import com.returdev.utils_library.utils.EnumUtil;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.User;
 import org.springframework.stereotype.Component;
 
 /**

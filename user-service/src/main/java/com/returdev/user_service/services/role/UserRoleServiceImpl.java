@@ -1,7 +1,7 @@
 package com.returdev.user_service.services.role;
 
-import com.returdev.user_service.enities.UserPermissionEntity;
-import com.returdev.user_service.enities.UserRoleEntity;
+import com.returdev.user_service.entities.UserPermissionEntity;
+import com.returdev.user_service.entities.UserRoleEntity;
 import com.returdev.user_service.repositories.UserRoleRepository;
 import com.returdev.utils_library.exceptions.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;

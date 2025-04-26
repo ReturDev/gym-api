@@ -1,4 +1,4 @@
-package com.returdev.user_service.enities;
+package com.returdev.user_service.entities;
 
 import com.returdev.user_service.enums.UserPermission;
 import jakarta.persistence.*;
