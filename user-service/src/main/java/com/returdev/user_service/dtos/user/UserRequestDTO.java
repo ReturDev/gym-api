@@ -1,5 +1,6 @@
 package com.returdev.user_service.dtos.user;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.returdev.user_service.annotations.validations.ValidPassword;
 import com.returdev.utils_library.annotations.ValidId;
 import jakarta.validation.constraints.Email;
@@ -29,6 +30,6 @@ public record UserRequestDTO(
         @Size(max = 50) String surnames,
         @NotNull @Email String email,
         @ValidPassword String password,
-        @ValidId Long userRoleId
+        @JsonProperty("user_role_id") @ValidId Long userRoleId
 ) {
 }
