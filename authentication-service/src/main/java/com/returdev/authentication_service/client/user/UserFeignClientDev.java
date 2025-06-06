@@ -45,4 +45,9 @@ public class UserFeignClientDev implements UserFeignClient {
                 true
         );
     }
+
+    @Override
+    public void saveRefreshToken(String token) {
+        System.out.println(token);
+    }
 }
