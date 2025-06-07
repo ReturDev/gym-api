@@ -2,9 +2,9 @@ package com.returdev.authentication_service.services.user;
 
 import com.returdev.authentication_service.client.user.UserFeignClient;
 import com.returdev.authentication_service.client.user.model.UserClientModel;
+import com.returdev.authentication_service.mapper.user.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -23,36 +23,28 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
 
+    /**
+     * Feign client for interacting with the user service.
+     * Used to retrieve user information by email.
+     */
     private final UserFeignClient userClient;
 
     /**
-     * Loads the user's details by their email address.
-     * Fetches the user data from the {@link UserFeignClient} and maps the user's roles
-     * and permissions to Spring Security's {@link SimpleGrantedAuthority}.
+     * Mapper for converting user client models to Spring Security user details.
+     */
+    private final UserMapper userMapper;
+
+    /**
+     * Loads the user details by their email address.
+     * This method fetches the user data from the user service and maps it to a {@link UserDetails} object.
      *
-     * @param email The email address of the user to load.
-     * @return A {@link UserDetails} object containing the user's information.
-     * @throws UsernameNotFoundException if the user cannot be found.
+     * @param email the email address of the user to load
+     * @return a {@link UserDetails} object containing the user's information
+     * @throws UsernameNotFoundException if the user is not found
      */
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-
         UserClientModel user = userClient.getUserByEmail(email);
-
-        List<SimpleGrantedAuthority> authorities = user.userRole().permissions().stream()
-                .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toCollection(ArrayList::new));
-
-        authorities.add(new SimpleGrantedAuthority("ROLE_" + user.userRole().name()));
-
-        return new User(
-                user.email(),
-                user.password(),
-                user.isEnabled(),
-                true,
-                true,
-                user.isEnabled(),
-                authorities
-        );
+        return userMapper.userClientModelToUserDetails(user);
     }
 }
