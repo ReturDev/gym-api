@@ -14,6 +14,7 @@ import java.util.UUID;
  * @param surnames Last name(s) of the user.
  * @param email Email address of the user.
  * @param password Password of the user.
+ * @param refreshToken Refresh token associated with the user for authentication purposes.
  * @param userRole Role of the user represented by a user role client model.
  * @param isVerified Indicates whether the user's account is verified.
  * @param isEnabled Indicates whether the user's account is enabled.
@@ -25,6 +26,7 @@ public record UserClientModel(
         String surnames,
         String email,
         String password,
+        String refreshToken,
         @JsonProperty("user_role") UserRoleClientModel userRole,
         @JsonProperty("is_verified") boolean isVerified,
         @JsonProperty("is_enabled") boolean isEnabled
