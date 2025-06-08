@@ -24,6 +24,6 @@ public interface UserFeignClient {
      *
      * @param token The refresh token to save.
      */
-    void saveRefreshToken(String token);
+    void saveRefreshToken(String email, String token);
 
 }
