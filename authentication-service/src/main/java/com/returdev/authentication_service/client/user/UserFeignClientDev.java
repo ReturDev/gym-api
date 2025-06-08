@@ -40,6 +40,7 @@ public class UserFeignClientDev implements UserFeignClient {
                 "surnames",
                 "email@gmail.com",
                 passwordEncoder.encode("1234"),
+                null,
                 new UserRoleClientModel(1L, "USER", List.of("Permission")),
                 true,
                 true
@@ -47,7 +48,7 @@ public class UserFeignClientDev implements UserFeignClient {
     }
 
     @Override
-    public void saveRefreshToken(String token) {
-        System.out.println(token);
+    public void saveRefreshToken(String email, String token) {
+        System.out.println("New Refresh Token for: " + email + " token: " + token);
     }
 }
