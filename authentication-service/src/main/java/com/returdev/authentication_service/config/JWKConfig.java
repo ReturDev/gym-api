@@ -1,11 +1,17 @@
 package com.returdev.authentication_service.config;
 
+import com.nimbusds.jose.JOSEException;
+import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
+import com.nimbusds.jose.proc.JWSKeySelector;
+import com.nimbusds.jose.proc.JWSVerificationKeySelector;
 import com.nimbusds.jose.proc.SecurityContext;
+import com.nimbusds.jwt.proc.ConfigurableJWTProcessor;
+import com.nimbusds.jwt.proc.DefaultJWTProcessor;
 import com.returdev.authentication_service.config.properties.KeystoreProperties;
 import com.returdev.authentication_service.exceptions.JWKException;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +20,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
+import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 
 import java.io.FileInputStream;
@@ -154,6 +162,26 @@ public class JWKConfig {
     @Bean
     public JwtEncoder jwtEncoder(JWKSource<SecurityContext> jwkSource) {
         return new NimbusJwtEncoder(jwkSource);
+    }
+
+    /**
+     * Creates a JWT decoder using the provided JWK source.
+     *
+     * @param jwkSource the JWK source containing the RSA key
+     * @return a JwtDecoder instance configured with the RSA public key
+     */
+    @Bean
+    public JwtDecoder jwtDecoder(JWKSource<SecurityContext> jwkSource) {
+        ConfigurableJWTProcessor<SecurityContext> jwtProcessor = new DefaultJWTProcessor<>();
+
+        JWSKeySelector<SecurityContext> keySelector = new JWSVerificationKeySelector<>(
+                JWSAlgorithm.RS256,
+                jwkSource
+        );
+
+        jwtProcessor.setJWSKeySelector(keySelector);
+
+        return new NimbusJwtDecoder(jwtProcessor);
     }
 }
 
