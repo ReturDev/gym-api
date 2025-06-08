@@ -34,6 +34,6 @@ public interface UserFeignClientProd extends UserFeignClient {
      */
     @PutMapping("${feign.client.user.paths.saveRefreshToken}")
     @Override
-    void saveRefreshToken(String token);
+    void saveRefreshToken(String email, String token);
 
 }
