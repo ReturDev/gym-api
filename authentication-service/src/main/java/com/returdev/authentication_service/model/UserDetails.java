@@ -23,6 +23,7 @@ public class UserDetails extends User {
     private final String name;
     private final String surnames;
     private final String role;
+    private final String refreshToken;
     private final List<String> permissions;
 
     /**
@@ -54,7 +55,8 @@ public class UserDetails extends User {
             String name,
             String surnames,
             String role,
-            List<String> permissions
+            List<String> permissions,
+            String refreshToken
     ) {
         super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
         this.id = id;
@@ -63,6 +65,7 @@ public class UserDetails extends User {
         this.surnames = surnames;
         this.role = role;
         this.permissions = permissions;
+        this.refreshToken = refreshToken;
     }
 
 }
